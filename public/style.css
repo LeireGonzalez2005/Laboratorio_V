@@ -1,0 +1,53 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #243047;
+  background: #f2f4f8;
+  line-height: 1.5;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+header { grid-column: 1 / -1; }
+h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.5rem); }
+h2 { margin-top: 0; font-size: 1.25rem; }
+.etiqueta { color: #6350a0; font-weight: 700; }
+section { background: white; border: 1px solid #dde2ec; border-radius: 12px; padding: 24px; min-width: 0; }
+form { display: grid; gap: 10px; }
+label { font-weight: 600; }
+input, textarea, select, button { font: inherit; }
+input, textarea, select { width: 100%; padding: 10px; border: 1px solid #aab4c5; border-radius: 6px; margin-bottom: 8px; }
+textarea { resize: vertical; }
+button { padding: 10px 16px; border: 0; border-radius: 6px; background: #57419a; color: white; cursor: pointer; }
+button:hover:not(:disabled) { background: #423078; }
+button:disabled { background: #e4e7ed; color: #626b7a; cursor: not-allowed; }
+:focus-visible { outline: 3px solid #b8790c; outline-offset: 3px; }
+.peligro { background: #a53143; }
+.peligro:hover:not(:disabled) { background: #812536; }
+.acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.ayuda, #lista-vacia { color: #626b7a; }
+#mensaje { border-left: 3px solid #8170b6; padding-left: 12px; }
+#lista-misiones { list-style: none; padding: 0; }
+#lista-misiones li {
+  border: 1px solid #dde2ec;
+  border-left: 4px solid #8170b6;
+  border-radius: 6px;
+  background: #faf9fc;
+  padding: 16px;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+#lista-misiones h3 { margin: 0 0 8px; font-size: 1.1rem; }
+#lista-misiones p { margin: 8px 0; }
+#lista-misiones .datos-mision { font-size: 0.9rem; color: #626b7a; }
+
+@media (max-width: 760px) {
+  main { grid-template-columns: 1fr; }
+}

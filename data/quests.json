@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "titulo": "El bosque encantado",
+    "descripcion": "Encuentra el amuleto perdido junto al antiguo roble.",
+    "dificultad": "Fácil",
+    "recompensa": "100 monedas de oro"
+  },
+  {
+    "id": 2,
+    "titulo": "La caravana desaparecida",
+    "descripcion": "Investiga la desaparición de una caravana en el paso de la montaña.",
+    "dificultad": "Media",
+    "recompensa": "250 monedas de oro y una poción de curación"
+  },
+  {
+    "id": 3,
+    "titulo": "El guardián de las ruinas",
+    "descripcion": "Derrota al guardián y recupera el cristal de las ruinas.",
+    "dificultad": "Difícil",
+    "recompensa": "500 monedas de oro y una espada legendaria"
+  }
+]
