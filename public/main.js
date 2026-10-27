@@ -1,5 +1,3 @@
-
-
 // Referencias a los elementos de la interfaz.
 const formulario = document.querySelector("#formulario-mision");
 const campoTitulo = document.querySelector("#titulo");
@@ -25,7 +23,22 @@ botonBorrar.addEventListener("click", borrarTodo);
 function agregarMision() {
   // TODO
   // crear objeto misión, incluir los valores de los campos y un id único
-}
+    const nuevaMision = {
+      id: Date.now(),
+      titulo: campoTitulo.value.trim(),
+      descripcion: campoDescripcion.value.trim(),
+      dificultad: campoDificultad.value,
+      recompensa: Number(campoRecompensa.value)
+    };
+
+    misiones.push(nuevaMision)
+    alert("Se ha añadido una nueva mision")
+    mostrarMisiones()
+    guardarMisiones()
+
+  }
+  
+
 
 function mostrarMisiones() {
   lista.innerHTML = "";
@@ -37,6 +50,9 @@ function mostrarMisiones() {
 
   // TODO: Recorre el array misiones y llama a mostrarMision(mision)
   // para cada misión.
+  misiones.forEach(mision=>{
+    mostrarMision(mision)
+  })
 }
 
 function mostrarMision(mision) {
@@ -65,12 +81,24 @@ function mostrarMision(mision) {
 }
 
 function guardarMisiones() {
+  localStorage.setItem("misiones",JSON.stringify(misiones))
 }
 
 function cargarMisiones() {
+  const misionesGuardadas = localStorage.getItem("misiones")
+
+  if (misionesGuardadas!=null){
+    misiones = JSON.parse(misionesGuardadas)
+  } else{
+    misiones = []
+  }
 }
 
 function borrarTodo() {
+  localStorage.removeItem("misiones")
+  misiones = []
+  mostrarMisiones()
+
 }
 
 cargarMisiones();
