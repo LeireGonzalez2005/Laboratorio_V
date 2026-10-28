@@ -1,23 +1,23 @@
 [
   {
-    "id": 1,
-    "titulo": "El bosque encantado",
-    "descripcion": "Encuentra el amuleto perdido junto al antiguo roble.",
+    "id": 1793122116073,
+    "titulo": "Tarea1",
+    "descripcion": "Trabajar con localStorage",
     "dificultad": "Fácil",
-    "recompensa": "100 monedas de oro"
+    "recompensa": 100
   },
   {
-    "id": 2,
-    "titulo": "La caravana desaparecida",
-    "descripcion": "Investiga la desaparición de una caravana en el paso de la montaña.",
-    "dificultad": "Media",
-    "recompensa": "250 monedas de oro y una poción de curación"
-  },
-  {
-    "id": 3,
-    "titulo": "El guardián de las ruinas",
-    "descripcion": "Derrota al guardián y recupera el cristal de las ruinas.",
+    "id": 1793122133767,
+    "titulo": "Tarea2",
+    "descripcion": "Trabajar con el servidor",
     "dificultad": "Difícil",
-    "recompensa": "500 monedas de oro y una espada legendaria"
+    "recompensa": 1000
+  },
+  {
+    "id": 1793122265879,
+    "titulo": "Tarea3",
+    "descripcion": "Volcerse loca",
+    "dificultad": "Difícil",
+    "recompensa": 30000
   }
 ]

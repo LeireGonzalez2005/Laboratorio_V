@@ -12,33 +12,31 @@ const botonSubir = document.querySelector("#subir-servidor");
 const botonBajar = document.querySelector("#bajar-servidor");
 let misiones = [];
 
-
 formulario.addEventListener("submit", (evento) => {
-  evento.preventDefault(); // Evita que el formulario recargue la página.
+  evento.preventDefault();
   agregarMision();
 });
 
 botonBorrar.addEventListener("click", borrarTodo);
+botonSubir.addEventListener("click", subirServidor);
+botonBajar.addEventListener("click", bajarServidor);
 
 function agregarMision() {
-  // TODO
-  // crear objeto misión, incluir los valores de los campos y un id único
-    const nuevaMision = {
-      id: Date.now(),
-      titulo: campoTitulo.value.trim(),
-      descripcion: campoDescripcion.value.trim(),
-      dificultad: campoDificultad.value,
-      recompensa: Number(campoRecompensa.value)
-    };
+  const nuevaMision = {
+    id: Date.now(),
+    titulo: campoTitulo.value.trim(),
+    descripcion: campoDescripcion.value.trim(),
+    dificultad: campoDificultad.value,
+    recompensa: Number(campoRecompensa.value)
+  };
 
-    misiones.push(nuevaMision)
-    alert("Se ha añadido una nueva mision")
-    mostrarMisiones()
-    guardarMisiones()
+  misiones.push(nuevaMision);
+  alert("Se ha añadido una nueva misión");
+  mostrarMisiones();
+  guardarMisiones();
 
-  }
-  
-
+  formulario.reset();
+}
 
 function mostrarMisiones() {
   lista.innerHTML = "";
@@ -48,11 +46,9 @@ function mostrarMisiones() {
     listaVacia.textContent = "";
   }
 
-  // TODO: Recorre el array misiones y llama a mostrarMision(mision)
-  // para cada misión.
-  misiones.forEach(mision=>{
-    mostrarMision(mision)
-  })
+  misiones.forEach(mision => {
+    mostrarMision(mision);
+  });
 }
 
 function mostrarMision(mision) {
@@ -81,24 +77,66 @@ function mostrarMision(mision) {
 }
 
 function guardarMisiones() {
-  localStorage.setItem("misiones",JSON.stringify(misiones))
+  localStorage.setItem("misiones", JSON.stringify(misiones));
 }
 
 function cargarMisiones() {
-  const misionesGuardadas = localStorage.getItem("misiones")
-
-  if (misionesGuardadas!=null){
-    misiones = JSON.parse(misionesGuardadas)
-  } else{
-    misiones = []
+  const misionesGuardadas = localStorage.getItem("misiones");
+  if (misionesGuardadas != null) {
+    misiones = JSON.parse(misionesGuardadas);
+  } else {
+    misiones = [];
   }
 }
 
 function borrarTodo() {
-  localStorage.removeItem("misiones")
-  misiones = []
-  mostrarMisiones()
+  localStorage.removeItem("misiones");
+  misiones = [];
+  mostrarMisiones();
+}
 
+async function subirServidor() {
+  const misionesLocales = JSON.parse(localStorage.getItem('misiones')) || [];
+
+  try {
+    const respuesta = await fetch('/quests', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(misionesLocales)
+    });
+
+    if (!respuesta.ok) throw new Error('Error al subir');
+    
+    const datos = await respuesta.json();
+    alert(datos.mensaje || '¡Misiones guardadas en el servidor!');
+
+    borrarTodo()
+    cargarMisiones()
+    mostrarMisiones()
+
+  } catch (error) {
+    console.error('Error al subir:', error);
+    alert('No se pudieron subir las misiones');
+  }
+}
+
+async function bajarServidor() {
+  try {
+    const respuesta = await fetch('/quests');
+    if (!respuesta.ok) throw new Error('Error al descargar');
+
+    const misionesServidor = await respuesta.json();
+
+    // Actualiza localStorage, la variable local misiones y refresca la vista
+    localStorage.setItem('misiones', JSON.stringify(misionesServidor));
+    cargarMisiones(); 
+    mostrarMisiones(); 
+
+    alert('¡Misiones descargadas del servidor!');
+  } catch (error) {
+    console.error('Error al bajar:', error);
+    alert('No se pudieron descargar las misiones');
+  }
 }
 
 cargarMisiones();
