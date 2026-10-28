@@ -42,6 +42,28 @@ app.post('/quests', async (req, res) => {
   }
 });
 
+app.put('/quests/:id',async(req,res)=>{
+    const data = await fs.readFile(dataPath,'utf-8')
+    const misiones = JSON.parse(data)
+
+    const indice = misiones.findIndex(m=>m.id==req.params.id)
+
+    misiones[indice] = req.body
+    await fs.writeFile(dataPath,JSON.stringify(misiones,null,2))
+
+    res.send("Mision actualizada")
+})
+
+app.delete('/quests/:id',async (req,res)=>{
+    const data = fs.readFile(dataPath,'utf-8')
+    const misiones = JSON.parse(data)
+
+    const nuevasMisiones = misiones.filter(m=>m.id!=req.params.id) //son las misiones que se quedan
+    await fs.writeFile(dataPath,JSON.stringify(nuevasMisiones,null,2))
+
+    res.send("Mision borrada")    
+
+})
 app.listen(port, () => {
   console.log(`Servidor RPG corriendo en http://localhost:${port}`);  
 });

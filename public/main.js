@@ -68,10 +68,28 @@ function mostrarMision(mision) {
   recompensa.className = "datos-mision";
   recompensa.textContent = "Recompensa: " + mision.recompensa;
 
+  const btnEditar = document.createElement("button")
+  btnEditar.id = "btnEditar"
+  btnEditar.textContent = "Editar"
+  btnEditar.addEventListener("click",()=>{
+     console.log("Editar misión:", mision.id);
+     editar(mision.id)
+  })
+
+  const btnBorrar = document.createElement("button")
+  btnBorrar.id = "btnBorrar"
+  btnBorrar.textContent = "Borrar"
+  btnBorrar.addEventListener("click",()=>{
+    console.log("Borrar misión:", mision.id);
+    borrar(mision.id)})
+
+
   elemento.appendChild(titulo);
   elemento.appendChild(descripcion);
   elemento.appendChild(dificultad);
   elemento.appendChild(recompensa);
+  elemento.appendChild(btnEditar);
+  elemento.appendChild(btnBorrar);
 
   lista.appendChild(elemento);
 }
@@ -139,5 +157,47 @@ async function bajarServidor() {
   }
 }
 
+async function editar(id){
+  
+  let mision = misiones.find(m=>m.id== id)
+
+  const titulo = prompt('Nuevo titulo:', mision.titulo)
+
+  mision.titulo = titulo.trim()
+  
+  try {
+    const respuesta = await fetch(`quest/${id}`,{
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(mision)
+    })
+
+    localStorage.setItem("misiones",JSON.stringify(misiones))
+    guardarMisiones()
+    mostrarMisiones()
+
+  } catch(err){
+    console.error("Error al editar la mision")
+  }
+  
+}
+
+async function borrar(id){
+  let misionesActualizadas = misiones.filter(m=>m.id!=id)
+
+   try{
+    const res = await fetch(`quest/${id}`,{
+      method:'DELETE'
+    })
+
+    localStorage.setItem("misiones",JSON.stringify(misionesActualizadas))
+    misiones = misionesActualizadas
+    guardarMisiones()
+    mostrarMisiones()
+
+  } catch (err){
+    console.error("Error al borrar la mision")
+  }
+}
 cargarMisiones();
 mostrarMisiones();
